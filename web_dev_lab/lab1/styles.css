@@ -1,0 +1,126 @@
+@import url("starter.css");
+
+/* navbar stylings */
+nav {
+  display: flex;
+}
+
+.nav-item {
+  display: flex;
+  list-style-type: none;
+}
+#mobile-nav-wrapper {
+  background: #e9ecef;
+  padding: 1rem;
+}
+.nav-items-links {
+  padding: 1rem;
+  list-style-type: none;
+}
+
+#mobile-nav {
+  background: #e9ecef;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+}
+
+#mobile-nav-wrapper {
+  width: 60vw;
+  height: 100vh;
+  position: absolute;
+  left: 0;
+}
+#mobile-nav-wrapper::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgb(222 226 230, 0.5);
+  z-index: -100;
+}
+
+/* template styles */
+
+/* hamberger menu */
+label {
+  display: flex;
+  flex-direction: column;
+  width: 70px;
+  cursor: pointer;
+  transform: scale(0.5);
+}
+
+label span {
+  background: #023047;
+  border-radius: 10px;
+  height: 7px;
+  margin: 7px 0;
+  transition: 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+}
+
+span:nth-of-type(1) {
+  width: 50%;
+}
+
+span:nth-of-type(2) {
+  width: 100%;
+}
+
+span:nth-of-type(3) {
+  width: 75%;
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+
+input[type="checkbox"]:checked ~ span:nth-of-type(1) {
+  transform-origin: bottom;
+  transform: rotatez(45deg) translate(8px, 0px);
+}
+
+input[type="checkbox"]:checked ~ span:nth-of-type(2) {
+  transform-origin: top;
+  transform: rotatez(-45deg);
+}
+
+input[type="checkbox"]:checked ~ span:nth-of-type(3) {
+  transform-origin: bottom;
+  width: 50%;
+  transform: translate(30px, -11px) rotatez(45deg);
+}
+
+/* buttons */
+.button-31 {
+  background-color: #222;
+  border-radius: 4px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Farfetch Basis", "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+  margin: 0;
+  max-width: none;
+  min-height: 44px;
+  min-width: 10px;
+  outline: none;
+  overflow: hidden;
+  padding: 9px 20px 8px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 100%;
+}
+
+.button-31:hover,
+.button-31:focus {
+  opacity: 0.75;
+}
