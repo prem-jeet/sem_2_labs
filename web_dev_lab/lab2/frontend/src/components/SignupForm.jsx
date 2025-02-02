@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function SignupForm() {
   const [email, setEmail] = useState("");
@@ -12,20 +12,35 @@ export default function SignupForm() {
   const [fullName, setFullName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate();
+  const url = import.meta.env.VITE_API_URL + "/auth/register";
 
-  const handleSubmit = (e) => {
+  
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       alert("Passwords don't match");
       return;
     }
     // Here you would typically handle the signup logic
-    console.log("Signup attempted with:", {
-      email,
-      username,
-      fullName,
-      password,
+
+    const req = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json", // This is required for JSON
+      },
+      body: JSON.stringify({
+        email,
+        username,
+        fullname: fullName,
+        password,
+      }),
     });
+    const res = await req.json();
+    if (res.data?.token) {
+      window.localStorage.setItem("token", res.data.token);
+      navigate("/user");
+    }
   };
 
   return (

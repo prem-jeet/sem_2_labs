@@ -3,7 +3,6 @@ import {
   createRoutesFromElements,
   Route,
   Navigate,
-  Outlet,
 } from "react-router-dom";
 import AuthLayout from "./pages/auth/authLayout";
 import Signup from "./pages/auth/signup/page";
@@ -13,12 +12,9 @@ import UserLayout from "./pages/user/userLayout";
 import UserDetails from "./pages/user/userDetails/UserDetails";
 import UserInsurances from "./pages/user/insurances/UserInsurances";
 import BuyInsurances from "./pages/user/buyInsurances/BuyInsurances";
+import ProtectedRoute from "./ProtectedRoute";
 
-const isLoggedIn = false; // Replace with actual auth logic
-
-const ProtectedRoutes = () => {
-  return isLoggedIn ? <Outlet /> : <Navigate to="/auth/login" />;
-};
+const isLoggedIn = !!localStorage.getItem("token"); // Replace with actual auth logic
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -35,7 +31,7 @@ const router = createBrowserRouter(
       )}
 
       {/* Protected routes */}
-      <Route element={<ProtectedRoutes />}>
+      <Route element={<ProtectedRoute />}>
         <Route path="/" element={<Navigate to="/user" />} />
         <Route path="/user" element={<UserLayout />}>
           <Route path="" element={<UserDetails />} />

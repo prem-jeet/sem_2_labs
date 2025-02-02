@@ -2,6 +2,11 @@ import { NavLink } from "react-router-dom";
 import { Button } from "./ui/button";
 
 const Header = () => {
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.reload(false);
+  };
+
   return (
     <header className="flex items-center justify-between bg-cyan-900 text-white p-4 shadow-md">
       <div className="flex space-x-4 text-cyan-100">
@@ -43,7 +48,11 @@ const Header = () => {
           Buy Insurances
         </NavLink>
       </div>
-      <Button variant="destructive" className="text-white font-bold">
+      <Button
+        variant="destructive"
+        className="text-white font-bold"
+        onClick={handleLogout}
+      >
         Logout
       </Button>
     </header>

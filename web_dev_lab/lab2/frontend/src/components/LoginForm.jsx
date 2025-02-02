@@ -1,21 +1,39 @@
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Link } from "react-router-dom"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Link } from "react-router-dom";
 
 export default function LoginForm() {
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const url = import.meta.env.VITE_API_URL + "/auth/login";
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     // Here you would typically handle the login logic
-    console.log("Login attempted with:", { username, password })
-  }
+    const body = { username, password };
+    console.log(body);
+
+    const req = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json", // This is required for JSON
+      },
+      body: JSON.stringify({
+        username,
+        password,
+      }),
+    });
+    const res = await req.json();
+    if (res.data?.token) {
+      window.localStorage.setItem("token", res.data.token);
+      window.location.reload(false);
+    }
+  };
 
   return (
-    (<form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4">
       <div className="space-y-2">
         <Label htmlFor="username">Username</Label>
         <Input
@@ -24,7 +42,8 @@ export default function LoginForm() {
           placeholder="Enter your username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          required />
+          required
+        />
       </div>
       <div className="space-y-2">
         <Label htmlFor="password">Password</Label>
@@ -34,20 +53,26 @@ export default function LoginForm() {
           placeholder="Enter your password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          required />
+          required
+        />
       </div>
       <div className="flex justify-between items-center">
-        <Link to="/auth/forgot-password" className="text-sm text-blue-600 hover:underline">
+        <Link
+          to="/auth/forgot-password"
+          className="text-sm text-blue-600 hover:underline"
+        >
           Forgot password?
         </Link>
-        <Link to="/auth/signup" className="text-sm text-blue-600 hover:underline">
+        <Link
+          to="/auth/signup"
+          className="text-sm text-blue-600 hover:underline"
+        >
           Sign up
         </Link>
       </div>
       <Button type="submit" className="w-full">
         Login
       </Button>
-    </form>)
+    </form>
   );
 }
-
