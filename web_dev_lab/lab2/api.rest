@@ -1,0 +1,24 @@
+### get request
+GET http://localhost:55000
+
+
+### db routes
+
+### get insurances options
+GET http://localhost:55000/api/db/insurances/options
+
+
+### user routes
+
+### register new user
+POST http://localhost:55000/auth/register
+Content-Type: application/json
+
+{
+    "username": "prem",
+    "password": "123123456",
+    "fullname" : "premjeetprasd",
+    "email" : "prem@gmail.com"
+}
+
+### 
