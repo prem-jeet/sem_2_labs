@@ -6,13 +6,15 @@ import {
 } from "./db.query.js";
 
 const database = new DatabaseSync(`${import.meta.dirname}/main.db`);
-
+const shouldDeleteDB = true;
 try {
-  database.exec(`
+  if (shouldDeleteDB) {
+    database.exec(`
         DROP TABLE IF EXISTS insurances;
         DROP TABLE IF EXISTS users;
         DROP TABLE IF EXISTS insurance_options;
         `);
+  }
   database.exec(initUserDatabaseQuery);
   database.exec(initInsuranceOptionsQuery);
   database.exec(initUserInsuranceQuery);
@@ -26,7 +28,7 @@ try {
   `;
   database.exec(createInsuranceOPtions);
 } catch (err) {
-  console.log("failed to initialize databases");CanvasCaptureMediaStreamTrack 
+  console.log("failed to initialize databases");
   console.error(err);
 }
 export default database;

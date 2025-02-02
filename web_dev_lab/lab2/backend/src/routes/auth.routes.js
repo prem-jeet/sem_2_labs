@@ -34,7 +34,7 @@ authRouter.post("/register", hashPasswordMiddleware, (req, res) => {
     });
 
     return res.json(
-      new ApiResponse(201, token, "User registered successfully")
+      new ApiResponse(201, { token }, "User registered successfully")
     );
   } catch (error) {
     throw new ApiError(401);
@@ -45,7 +45,7 @@ authRouter.post("/login", (req, res) => {
   const { username, password } = req.body;
 
   try {
-    const getUser = database.prepare("SELECT * FROM users WHERE username  = ?");
+    const getUser = database.prepare("SELECT * FROM users WHERE username  LIKE ?");
     const user = getUser.get(username);
 
     if (!user) {
@@ -62,7 +62,7 @@ authRouter.post("/login", (req, res) => {
 
     // successful authentication
     const token = jwt.sign({ id: user.id }, process.env.SIGN, {
-      expiresIn: "24h",
+      expiresIn: "2m",
     });
 
     res.json({ token });
