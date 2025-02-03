@@ -10,6 +10,8 @@ const app = express();
 const PORT = 55000;
 
 app.use(cors());
+app.use(express.urlencoded({ extended: true, limit: "16kb" }));
+
 app.use(cookieParser());
 app.use(express.json());
 

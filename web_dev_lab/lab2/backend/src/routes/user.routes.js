@@ -5,12 +5,13 @@ import ApiError from "../utils/apiError.js";
 
 const userRouter = Router();
 
-userRouter.get("", (req, res) => {
+// todo : get user details
+userRouter.post("", (req, res) => {
   const query = database.prepare(
-    "SELECT id,username,fullname,email FROM USERS"
+    "SELECT id,username,fullname,email FROM USERS WHERE ID = ?"
   );
-  const users = query.all();
-  res.json(new ApiResponse(200, users));
+  const user = query.get(req.userId);
+  res.json(new ApiResponse(200, user));
 });
 
 // todo : fetch user insurances

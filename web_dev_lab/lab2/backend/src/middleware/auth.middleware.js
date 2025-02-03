@@ -14,6 +14,7 @@ export const hashPasswordMiddleware = async (req, res, next) => {
 
 export const verifyUserMiddleware = async (req, res, next) => {
   console.log(req.cookies);
+
   try {
     const token = req.headers["authorization"];
     if (!token) {
@@ -21,7 +22,11 @@ export const verifyUserMiddleware = async (req, res, next) => {
     }
 
     jwt.verify(token, process.env.SIGN, (error, decoded) => {
-      if (error) throw new ApiError(401, "Invalid token");
+      if (error) {
+        const err = new ApiError(401, "Invalid Token");
+        res.json(err);
+        throw error;
+      }
 
       req.userId = decoded.id;
       next();

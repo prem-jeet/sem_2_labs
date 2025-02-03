@@ -7,6 +7,10 @@ import database from "../db/db.js";
 import { hashPasswordMiddleware } from "../middleware/auth.middleware.js";
 
 const authRouter = express.Router();
+const cookieOptions = {
+  httpOnly: true,
+  secure: true,
+};
 
 function doesUserExists(username, email) {
   const checkUser = database.prepare(
@@ -65,7 +69,9 @@ authRouter.post("/login", (req, res) => {
     const isUserValid = bcrypt.compareSync(password, user.password);
 
     if (!isUserValid) {
-      throw new ApiError();
+      const error = new ApiError(400, "Credentials mismatch");
+      res.json(error);
+      throw error;
     }
 
     // successful authentication
@@ -73,11 +79,14 @@ authRouter.post("/login", (req, res) => {
       expiresIn: "2m",
     });
 
-    res.json(new ApiResponse(200, { token }, "User logged in successfully"));
+    res
+      .cookie("token", token, cookieOptions)
+      .json(new ApiResponse(200, { token }, "User logged in successfully"));
     return;
-  } catch (error) {
-    res.sendStatus(500).json({ error });
-    return;
+  } catch (err) {
+    const error = new ApiError(500, "login filed");
+    res.json(err);
+    throw error;
   }
 });
 
