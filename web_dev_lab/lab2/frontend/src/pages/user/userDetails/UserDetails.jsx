@@ -1,22 +1,58 @@
+import { Alert } from "@/components/Alert";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const UserDetails = () => {
   const url = import.meta.env.VITE_API_URL + "/user";
   const token = localStorage.getItem("token");
   const [user, setUser] = useState({});
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [alertTxt, setAlertTxt] = useState("");
 
-  useEffect(() => async () => {
-    const req = await fetch(url, {
-      method: "POST",
-      headers: {
-        Authorization: token, // This is required for JSON
-      },
-    });
-    const res = await req.json();
-    console.log(res);
-  });
+  const navigate = useNavigate();
+  if (!token) {
+    navigate("/auth/login");
+  }
 
-  return <div>UsereDetails</div>;
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const req = await fetch(url, {
+          method: "POST",
+          headers: {
+            Authorization: token,
+          },
+        });
+        const res = await req.json();
+        if (res.message === "Invalid Token") {
+          localStorage.removeItem("token");
+          setAlertTxt(res.message);
+          setAlertOpen(true);
+        } else if (res.success) {
+          setUser(res.data);
+        } else {
+          setAlertTxt(res.message);
+          setAlertOpen(true);
+        }
+      } catch (error) {
+        setAlertTxt("Network error. Please try again.");
+        setAlertOpen(true);
+      }
+    };
+
+    fetchUser();
+  }, [navigate, token, url]); // Add dependencies here
+
+  return (
+    <>
+      <Alert
+        isOpen={alertOpen}
+        onChange={() => setAlertOpen(false)}
+        text={alertTxt}
+      />
+      <div>{JSON.stringify(user, null, 2)}</div>
+    </>
+  );
 };
 
 export default UserDetails;

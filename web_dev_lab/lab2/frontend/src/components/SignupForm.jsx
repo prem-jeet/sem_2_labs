@@ -45,6 +45,8 @@ export default function SignupForm() {
 
     if (res.data) {
       window.localStorage.setItem("token", res.data.token);
+      window.localStorage.setItem("id", res.data.id);
+
       setAlertMsg(res.message);
       setTimeout(() => navigate("/user"), 700);
     } else {
