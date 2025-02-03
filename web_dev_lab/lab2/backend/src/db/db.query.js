@@ -13,7 +13,7 @@ export const initUserDatabaseQuery = `
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT UNIQUE,
     fullname TEXT NOT NULL,
-    email TEXT NOT NULL,
+    email TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL
     )
 `;

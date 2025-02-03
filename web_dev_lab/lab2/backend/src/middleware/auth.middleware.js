@@ -13,6 +13,7 @@ export const hashPasswordMiddleware = async (req, res, next) => {
 };
 
 export const verifyUserMiddleware = async (req, res, next) => {
+  console.log(req.cookies);
   try {
     const token = req.headers["authorization"];
     if (!token) {
