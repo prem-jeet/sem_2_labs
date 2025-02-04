@@ -42,6 +42,7 @@ const BuyInsurances = () => {
     }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => fetchInsurances, [url]);
   return (
     <>

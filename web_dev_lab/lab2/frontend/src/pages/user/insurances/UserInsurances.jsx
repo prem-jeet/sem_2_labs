@@ -1,13 +1,29 @@
 import { Alert } from "@/components/Alert";
 import ClaimInsuranceCard from "@/components/ClaimInsuranceCard";
 import { Button } from "@/components/ui/button";
+import { logoutUser } from "@/lib/auth.util";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
 const UserInsurances = () => {
   const url = import.meta.env.VITE_API_URL + "/user";
+
   const token = localStorage.getItem("token");
+
   const id = localStorage.getItem("id");
+
+  if (!(token && id)) {
+    logoutUser().then((res) => {
+      if (res.success) {
+        setAlertText(res.message);
+        setAlertOpen(true);
+        setTimeout(() => {
+          setAlertOpen(false);
+          window.location.reload(false);
+        }, 700);
+      }
+    });
+  }
 
   const [alertOpen, setAlertOpen] = useState(false);
   const [alertText, setAlertText] = useState("");
@@ -34,6 +50,7 @@ const UserInsurances = () => {
     }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => fetchInsurances, [url]);
 
   return (
