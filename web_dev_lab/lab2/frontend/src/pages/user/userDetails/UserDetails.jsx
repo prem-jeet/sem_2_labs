@@ -24,16 +24,13 @@ const UserDetails = () => {
           },
         });
         const res = await req.json();
-        if (res.message === "Invalid Token") {
-          localStorage.removeItem("token");
-          setAlertTxt(res.message);
-          setAlertOpen(true);
-        } else if (res.success) {
+        if (res.success) {
           setUser(res.data);
         } else {
           setAlertTxt(res.message);
           setAlertOpen(true);
         }
+        // eslint-disable-next-line no-unused-vars
       } catch (error) {
         setAlertTxt("Network error. Please try again.");
         setAlertOpen(true);
