@@ -1,6 +1,5 @@
 import { Alert } from "@/components/Alert";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 const UserDetails = () => {
   const url = import.meta.env.VITE_API_URL + "/user";
@@ -9,9 +8,8 @@ const UserDetails = () => {
   const [alertOpen, setAlertOpen] = useState(false);
   const [alertTxt, setAlertTxt] = useState("");
 
-  const navigate = useNavigate();
   if (!token) {
-    navigate("/auth/login");
+    window.location.reload(false);
   }
 
   useEffect(() => {
@@ -38,7 +36,7 @@ const UserDetails = () => {
     };
 
     fetchUser();
-  }, [navigate, token, url]); // Add dependencies here
+  }, [token, url]); // Add dependencies here
 
   return (
     <>
@@ -47,7 +45,16 @@ const UserDetails = () => {
         onChange={() => setAlertOpen(false)}
         text={alertTxt}
       />
-      <div>{JSON.stringify(user, null, 2)}</div>
+      <div className="w-full p-4 flex justify-start gap-12 bg-slate-100 rounded-md shadow-lg">
+        <div className="flex flex-col p-7">
+          <p className="text-5xl font-bold">{user.fullname}</p>
+          <p className="text-slate-400 py-2">@{user.username}</p>
+        </div>
+        <div className="flex-col gap-4 text-2xl font-light p-7">
+          <p>Bought Insurances : {user.insurancesBought}</p>
+          <p className="py-4">Claimend Insurances : {user.insurancesClaimed}</p>
+        </div>
+      </div>
     </>
   );
 };

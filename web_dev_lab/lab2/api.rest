@@ -5,20 +5,45 @@ GET http://localhost:55000
 ### db routes
 
 ### get insurances options
-GET http://localhost:55000/api/db/insurances/options
+GET http://localhost:55000/api/insurances/options
 
 
 ### user routes
 
 ### register new user
-POST http://localhost:55000/auth/register
+POST http://localhost:55000/api/auth/register
 Content-Type: application/json
 
 {
-    "username": "prem",
+    "username": "premj",
     "password": "123123456",
     "fullname" : "premjeetprasd",
     "email" : "prem@gmail.com"
 }
 
-### 
+### fetch user data
+### fetch all users for testing
+GET http://localhost:55000/api/user
+
+
+### get user insurances
+GET http://localhost:55000/api/user/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzM4NTAzMTAxLCJleHAiOjE3Mzg1MDMyMjF9.hVwVdoYWhsOdClFqOmWvL1M2E8VjH4iXmtBB8bgitdE
+
+### set user isurances
+POST http://localhost:55000/api/user/1
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzM4NTAzMTAxLCJleHAiOjE3Mzg1MDMyMjF9.hVwVdoYWhsOdClFqOmWvL1M2E8VjH4iXmtBB8bgitdE
+
+{
+    "selectedInsurances" : ["A", "B"]
+}
+
+### delete insurance
+DELETE http://localhost:55000/api/user/1/2
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzM4NTAzMTAxLCJleHAiOjE3Mzg1MDMyMjF9.hVwVdoYWhsOdClFqOmWvL1M2E8VjH4iXmtBB8bgitdE
+
+
+### claim insurance
+PUT http://localhost:55000/api/user/1/2
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzM4NTAzMTAxLCJleHAiOjE3Mzg1MDMyMjF9.hVwVdoYWhsOdClFqOmWvL1M2E8VjH4iXmtBB8bgitdE

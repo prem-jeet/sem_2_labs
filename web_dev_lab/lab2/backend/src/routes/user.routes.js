@@ -14,10 +14,11 @@ userRouter.post("", (req, res) => {
   const insurances = database
     .prepare(`SELECT * FROM INSURANCES WHERE USER_ID = ?`)
     .all(req.userId * 1);
-  console.log("called from here", { insurances });
 
   const insurancesBought = insurances.length;
-  const insurancesClaimed = insurances.filter((policy) => policy.claimed).length;
+  const insurancesClaimed = insurances.filter(
+    (policy) => policy.claimed
+  ).length;
 
   res.json(
     new ApiResponse(200, { ...user, insurancesBought, insurancesClaimed })
