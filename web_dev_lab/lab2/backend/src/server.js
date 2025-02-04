@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(cookieParser());
 app.use(express.json());
 
-app.use("/api/insurances", insuranceRouter);
+app.use("/api/insurances", verifyUserMiddleware, insuranceRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/user", verifyUserMiddleware, userRouter);
 app.listen(PORT, () => console.log("servrer listening on port ", PORT));

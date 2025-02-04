@@ -13,10 +13,8 @@ export const hashPasswordMiddleware = async (req, res, next) => {
 };
 
 export const verifyUserMiddleware = async (req, res, next) => {
-  console.log(req.cookies);
-
   try {
-    const token = req.headers["authorization"];
+    const token = req.cookies?.token || req.headers["authorization"];
     if (!token) {
       throw new ApiError(401, "Unautherized access");
     }

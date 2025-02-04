@@ -18,19 +18,21 @@ userRouter.post("", (req, res) => {
 userRouter.get("/:id", (req, res) => {
   const { id } = req.params;
   const query = database.prepare(
-    `SELECT * FROM USERS JOIN INSURANCES WHERE USERS.ID LIKE ? AND USERS.ID == INSURANCES.USER_ID`
+    `SELECT 
+    temp.id as id,
+    selected_policy,
+    name, description,user_id,claimed
+    FROM (SELECT insurances.claimed, insurances.id as id, insurances.selected_policy, users.id as user_id FROM USERS JOIN INSURANCES WHERE USERS.ID LIKE ? AND USERS.ID == INSURANCES.USER_ID) AS temp
+    JOIN insurance_options WHERE TEMP.selected_policy = insurance_options.id
+    `
   );
 
   const insurances = query.all(id);
+  console.log({ insurances });
 
   return res.json(
     new ApiResponse(200, {
-      insurances: insurances.map((data) => ({
-        id: data.id,
-        user_id: data.user_id,
-        selected_policy: data.selected_policy,
-        claimed: data.claimed,
-      })),
+      insurances,
     })
   );
 

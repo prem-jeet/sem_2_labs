@@ -39,12 +39,16 @@ authRouter.post("/register", hashPasswordMiddleware, (req, res) => {
     const token = jwt.sign({ id: result.lastInsertRowid }, process.env.SIGN, {
       expiresIn: "2m",
     });
-    const cookieOptions = {
-      httpOnly: true,
-    };
+
     return res
       .cookie("token", token, cookieOptions)
-      .json(new ApiResponse(201, { token }, "User registered successfully"));
+      .json(
+        new ApiResponse(
+          201,
+          { token, id: result.lastInsertRowid },
+          "User registered successfully"
+        )
+      );
   } catch (err) {
     const error = new ApiError(401, err);
     res.json(error);
@@ -79,13 +83,20 @@ authRouter.post("/login", (req, res) => {
       expiresIn: "2m",
     });
 
-    res
+    return res
       .cookie("token", token, cookieOptions)
-      .json(new ApiResponse(200, { token }, "User logged in successfully"));
-    return;
+      .json(
+        new ApiResponse(
+          200,
+          { token, id: user.id },
+          "User logged in successfully"
+        )
+      );
   } catch (err) {
+    console.log({ err });
+
     const error = new ApiError(500, "login filed");
-    res.json(err);
+    res.json(error);
     throw error;
   }
 });

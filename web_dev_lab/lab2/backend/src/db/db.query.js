@@ -3,7 +3,8 @@
 export const initInsuranceOptionsQuery = `
     CREATE TABLE IF NOT EXISTS insurance_options(
     id TEXT PRIMARY KEY,
-    name TEXT NOT NULL
+    name TEXT UNIQUE NOT NULL,
+    description TEXT NOT NULL
     ) 
 `;
 

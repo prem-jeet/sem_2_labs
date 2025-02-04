@@ -22,9 +22,12 @@ try {
 
   const createInsuranceOPtions = `
   INSERT INTO insurance_options VALUES
-    ('A', 'INSURANCE A'),
-    ('B', 'INSURANCE B'),
-    ('C', 'INSURANCE C')
+    ('A', 'INSURANCE A', 'Lorem ipsum asd ll'),
+    ('B', 'INSURANCE B', 'Lorem ipsum asd ll'),
+    ('C', 'INSURANCE C', 'Lorem ipsum asd ll'),
+     ('A1', 'INSURANCE A1', 'Lorem ipsum asd ll'),
+    ('B1', 'INSURANCE B1', 'Lorem ipsum asd ll'),
+    ('C1', 'INSURANCE C1', 'Lorem ipsum asd ll')
   `;
   database.exec(createInsuranceOPtions);
 } catch (err) {
