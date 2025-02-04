@@ -4,7 +4,10 @@ import jwt from "jsonwebtoken";
 import ApiResponse from "../utils/apiResponse.js";
 import ApiError from "../utils/apiError.js";
 import database from "../db/db.js";
-import { hashPasswordMiddleware } from "../middleware/auth.middleware.js";
+import {
+  hashPasswordMiddleware,
+  verifyUserMiddleware,
+} from "../middleware/auth.middleware.js";
 
 const authRouter = express.Router();
 const cookieOptions = {
@@ -131,5 +134,10 @@ authRouter.put("/changePassword", hashPasswordMiddleware, (req, res) => {
     res.json(error);
     throw error;
   }
+});
+
+authRouter.post("/logout", verifyUserMiddleware, (req, res) => {
+  const id = req.cookies.userId;
+  return res.clearCookie().json(new ApiResponse(200, "Logged out succefully"));
 });
 export default authRouter;

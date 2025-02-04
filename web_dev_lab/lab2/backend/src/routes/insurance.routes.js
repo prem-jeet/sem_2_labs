@@ -12,7 +12,6 @@ insuranceRouter.get("/available", (req, res) => {
     .prepare(`SELECT selected_policy FROM INSURANCES WHERE USER_ID = ?`)
     .all(req.userId)
     .map(({ selected_policy }) => selected_policy);
-  console.log({ userInsurances });
 
   const options = optionsQuery.all();
 

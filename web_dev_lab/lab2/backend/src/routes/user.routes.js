@@ -11,7 +11,17 @@ userRouter.post("", (req, res) => {
     "SELECT id,username,fullname,email FROM USERS WHERE ID = ?"
   );
   const user = query.get(req.userId);
-  res.json(new ApiResponse(200, user));
+  const insurances = database
+    .prepare(`SELECT * FROM INSURANCES WHERE USER_ID = ?`)
+    .all(req.userId * 1);
+  console.log("called from here", { insurances });
+
+  const insurancesBought = insurances.length;
+  const insurancesClaimed = insurances.filter((policy) => policy.claimed).length;
+
+  res.json(
+    new ApiResponse(200, { ...user, insurancesBought, insurancesClaimed })
+  );
 });
 
 // todo : fetch user insurances
@@ -28,7 +38,6 @@ userRouter.get("/:id", (req, res) => {
   );
 
   const insurances = query.all(id);
-  console.log({ insurances });
 
   return res.json(
     new ApiResponse(200, {
