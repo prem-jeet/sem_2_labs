@@ -1,0 +1,6 @@
+### get request
+GET http://localhost:5000/sensor/motion
+
+### post request
+POST http://localhost:5000/sensor/motion
+

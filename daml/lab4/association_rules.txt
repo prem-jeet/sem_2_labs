@@ -1,0 +1,25 @@
+Association Rules (Confidence >= 70%):
+
+{ Item1 } => { Item2 } (Confidence: 80.0000%)
+
+{ Item2 } => { Item1 } (Confidence: 80.0000%)
+
+{ Item1 } => { Item2 Item3 } (Confidence: 80.0000%)
+
+{ Item2 } => { Item1 Item3 } (Confidence: 80.0000%)
+
+{ Item1 Item2 } => { Item3 } (Confidence: 100.0000%)
+
+{ Item1 Item3 } => { Item2 } (Confidence: 80.0000%)
+
+{ Item2 Item3 } => { Item1 } (Confidence: 80.0000%)
+
+{ Item1 } => { Item3 } (Confidence: 100.0000%)
+
+{ Item3 } => { Item1 } (Confidence: 83.3333%)
+
+{ Item2 } => { Item3 } (Confidence: 100.0000%)
+
+{ Item3 } => { Item2 } (Confidence: 83.3333%)
+
+{ Item4 } => { Item3 } (Confidence: 100.0000%)
