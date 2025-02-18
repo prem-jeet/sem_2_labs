@@ -1,0 +1,10 @@
+<!DOCTYPE complaint [
+    <!ELEMENT complaint (empId, name, phone, email, complaintType, description, token)>
+    <!ELEMENT empId (#PCDATA)>
+    <!ELEMENT name (#PCDATA)>
+    <!ELEMENT phone (#PCDATA)>
+    <!ELEMENT email (#PCDATA)>
+    <!ELEMENT complaintType (#PCDATA)>
+    <!ELEMENT description (#PCDATA)>
+    <!ELEMENT token (#PCDATA)>
+]>
